@@ -39,9 +39,9 @@ export default function BelowFold() {
             <Link
               key={link.href}
               href={link.href}
-              className="group block p-6 rounded-xl border border-blue-500/10 bg-blue-500/[0.02] hover:bg-blue-500/[0.06] hover:border-blue-500/20 transition-all"
+              className="group block p-6 rounded-xl border border-[color-mix(in_srgb,var(--accent)_14%,transparent)] bg-[color-mix(in_srgb,var(--accent)_4%,transparent)] hover:bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] hover:border-[color-mix(in_srgb,var(--accent)_22%,transparent)] transition-all"
             >
-              <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-300">
+              <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-[var(--accent)]">
                 {link.title}
                 <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">
                   &rarr;

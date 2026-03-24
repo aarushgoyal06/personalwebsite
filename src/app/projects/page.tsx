@@ -10,8 +10,8 @@ const projects = [
   {
     title: "Personal Website",
     description:
-      "This site! A scroll-driven Lego car 3D experience built with Next.js, React Three Fiber, and Tailwind CSS.",
-    tech: ["Next.js", "Three.js", "Tailwind CSS"],
+      "This site! A scroll-driven terminal hero, file-based blog, and blue-on-black UI — Next.js and Tailwind.",
+    tech: ["Next.js", "Tailwind CSS"],
     link: "https://github.com/aarushgoyal06",
   },
   {

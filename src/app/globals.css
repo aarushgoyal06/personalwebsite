@@ -3,6 +3,8 @@
 :root {
   --background: #060b14;
   --foreground: #e0e8f0;
+  /* Default accent — updated by terminal `theme` + SiteThemeHydration */
+  --accent: #3b82f6;
 }
 
 html {
@@ -14,4 +16,18 @@ body {
   background: var(--background);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
+}
+
+/* Subtle accent-tinted shell border (updates when --accent changes) */
+.terminal-shell-border {
+  border-color: color-mix(in srgb, var(--accent) 32%, transparent);
+}
+
+.terminal-shell-titlebar {
+  border-bottom-color: color-mix(in srgb, var(--accent) 22%, transparent);
+  background: color-mix(in srgb, var(--accent) 6%, #050a12);
+}
+
+.terminal-shell-accent-line {
+  border-left-color: color-mix(in srgb, var(--accent) 45%, transparent);
 }

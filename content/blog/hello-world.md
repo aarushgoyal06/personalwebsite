@@ -7,7 +7,7 @@ tags: ["personal", "intro"]
 
 # Welcome!
 
-This is my first blog post. I built this site from scratch using Next.js, React Three Fiber, and Tailwind CSS. The homepage features a scroll-driven Lego car that builds itself as you scroll — pretty cool, right?
+This is my first blog post. I built this site from scratch using Next.js and Tailwind CSS. The homepage is a scroll-driven terminal where each section runs a new command — try it out.
 
 ## Why a blog?
 
