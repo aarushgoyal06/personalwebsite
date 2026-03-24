@@ -83,8 +83,10 @@ export default function LegoRenderer({ bricks }: LegoRendererProps) {
     if (!mesh) return;
 
     const progress = scroll.offset;
-    // Use 85% of scroll for building, reserve 15% for completion state
-    const buildProgress = Math.min(1, progress / 0.85);
+    // Start with 3% of bricks visible so the scene isn't empty on load.
+    // Use 85% of scroll for building, reserve 15% for the completion state.
+    const baseVisible = 0.03;
+    const buildProgress = Math.min(1, baseVisible + (progress / 0.85) * (1 - baseVisible));
     const targetCount = Math.floor(buildProgress * totalBricks);
 
     const dt = Math.min(delta, 0.05);
@@ -148,7 +150,7 @@ export default function LegoRenderer({ bricks }: LegoRendererProps) {
       castShadow
       receiveShadow
     >
-      <meshStandardMaterial vertexColors toneMapped={false} />
+      <meshStandardMaterial toneMapped={false} />
     </instancedMesh>
   );
 }

@@ -8,17 +8,17 @@ export const metadata: Metadata = {
 const socials = [
   {
     label: "GitHub",
-    href: "https://github.com/aarushgoyal",
+    href: "https://github.com/aarushgoyal06",
     icon: "GH",
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/aarushgoyal",
+    href: "https://www.linkedin.com/in/aarushgoyal/",
     icon: "LI",
   },
   {
     label: "Email",
-    href: "mailto:hello@aarushgoyal.com",
+    href: "mailto:goyalaarush6@gmail.com",
     icon: "@",
   },
 ];
@@ -27,7 +27,7 @@ export default function ContactPage() {
   return (
     <div className="pt-24 pb-16 max-w-2xl mx-auto px-6">
       <h1 className="text-3xl font-bold mb-4">Contact</h1>
-      <p className="text-neutral-400 mb-12">
+      <p className="text-slate-400 mb-12">
         Want to work together, have a question, or just want to say hi? Send me
         a message.
       </p>
@@ -40,7 +40,7 @@ export default function ContactPage() {
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-neutral-300 mb-2"
+            className="block text-sm font-medium text-slate-300 mb-2"
           >
             Name
           </label>
@@ -49,7 +49,7 @@ export default function ContactPage() {
             id="name"
             name="name"
             required
-            className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-lg bg-blue-500/5 border border-blue-500/15 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-transparent transition-all"
             placeholder="Your name"
           />
         </div>
@@ -57,7 +57,7 @@ export default function ContactPage() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-neutral-300 mb-2"
+            className="block text-sm font-medium text-slate-300 mb-2"
           >
             Email
           </label>
@@ -66,7 +66,7 @@ export default function ContactPage() {
             id="email"
             name="email"
             required
-            className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-lg bg-blue-500/5 border border-blue-500/15 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-transparent transition-all"
             placeholder="you@example.com"
           />
         </div>
@@ -74,7 +74,7 @@ export default function ContactPage() {
         <div>
           <label
             htmlFor="message"
-            className="block text-sm font-medium text-neutral-300 mb-2"
+            className="block text-sm font-medium text-slate-300 mb-2"
           >
             Message
           </label>
@@ -83,21 +83,21 @@ export default function ContactPage() {
             name="message"
             rows={5}
             required
-            className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent transition-all resize-none"
+            className="w-full px-4 py-3 rounded-lg bg-blue-500/5 border border-blue-500/15 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-transparent transition-all resize-none"
             placeholder="What's on your mind?"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full py-3 rounded-lg bg-white text-black font-medium hover:bg-neutral-200 transition-colors"
+          className="w-full py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors"
         >
           Send Message
         </button>
       </form>
 
-      <div className="border-t border-white/10 pt-8">
-        <h2 className="text-lg font-semibold mb-4 text-neutral-300">
+      <div className="border-t border-blue-500/10 pt-8">
+        <h2 className="text-lg font-semibold mb-4 text-slate-300">
           Find me elsewhere
         </h2>
         <div className="flex gap-4">
@@ -107,9 +107,9 @@ export default function ContactPage() {
               href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-colors text-sm text-neutral-300 hover:text-white"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-500/15 hover:bg-blue-500/10 transition-colors text-sm text-slate-300 hover:text-blue-300"
             >
-              <span className="font-mono text-xs">{s.icon}</span>
+              <span className="font-mono text-xs text-blue-400">{s.icon}</span>
               {s.label}
             </a>
           ))}

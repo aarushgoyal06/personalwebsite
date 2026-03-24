@@ -10,9 +10,9 @@ const projects = [
   {
     title: "Personal Website",
     description:
-      "This site! A scroll-driven Lego Taj Mahal 3D experience built with Next.js, React Three Fiber, and Sanity CMS.",
-    tech: ["Next.js", "Three.js", "Tailwind CSS", "Sanity"],
-    link: "https://github.com/aarushgoyal",
+      "This site! A scroll-driven Lego car 3D experience built with Next.js, React Three Fiber, and Tailwind CSS.",
+    tech: ["Next.js", "Three.js", "Tailwind CSS"],
+    link: "https://github.com/aarushgoyal06",
   },
   {
     title: "Project Alpha",
@@ -41,7 +41,7 @@ export default function ProjectsPage() {
   return (
     <div className="pt-24 pb-16 max-w-4xl mx-auto px-6">
       <h1 className="text-3xl font-bold mb-4">Projects</h1>
-      <p className="text-neutral-400 mb-12">
+      <p className="text-slate-400 mb-12">
         Things I&apos;ve built, shipped, and tinkered with.
       </p>
 
@@ -56,22 +56,22 @@ export default function ProjectsPage() {
                 ? "noopener noreferrer"
                 : undefined
             }
-            className="group block p-6 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all"
+            className="group block p-6 rounded-xl border border-blue-500/10 bg-blue-500/[0.02] hover:bg-blue-500/[0.06] hover:border-blue-500/20 transition-all"
           >
-            <h2 className="text-lg font-semibold text-white mb-2">
+            <h2 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-300">
               {project.title}
-              <span className="inline-block ml-2 transition-transform group-hover:translate-x-1 text-neutral-500">
+              <span className="inline-block ml-2 transition-transform group-hover:translate-x-1 text-slate-500">
                 &rarr;
               </span>
             </h2>
-            <p className="text-neutral-400 text-sm leading-relaxed mb-4">
+            <p className="text-slate-400 text-sm leading-relaxed mb-4">
               {project.description}
             </p>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span
                   key={t}
-                  className="text-xs px-2 py-1 rounded-md bg-white/5 text-neutral-400 border border-white/5"
+                  className="text-xs px-2 py-1 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/10"
                 >
                   {t}
                 </span>

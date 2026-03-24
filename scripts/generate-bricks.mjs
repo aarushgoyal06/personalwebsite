@@ -1,5 +1,5 @@
 /**
- * Procedural Taj Mahal voxel generator.
+ * Procedural Lego car voxel generator — bold classic colors.
  * Outputs a JSON array of { x, y, z, color } brick positions sorted
  * bottom-to-top for the scroll-driven build animation.
  *
@@ -12,174 +12,205 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const COLORS = {
-  marble: "#F5F0E8",
-  marbleLight: "#FDFBF7",
-  sandstone: "#D4A574",
-  sandstoneLight: "#E8C9A0",
-  red: "#C0392B",
-  teal: "#1ABC9C",
-  dome: "#F0EBE0",
-  platform: "#D9D0C1",
-  minaret: "#EDE8DC",
-  minaretCap: "#C8A96E",
-  garden: "#27AE60",
+const C = {
+  chassis:    "#1565C0", // Deep blue
+  body:       "#1E88E5", // Bright blue
+  bodyAccent: "#42A5F5", // Light blue
+  roof:       "#0D47A1", // Dark blue
+  bumper:     "#B0BEC5", // Silver/grey
+  grill:      "#37474F", // Dark grey
+  headlight:  "#FDD835", // Yellow
+  taillight:  "#E53935", // Red
+  window:     "#81D4FA", // Light blue glass
+  windowTrim: "#263238", // Very dark
+  tire:       "#212121", // Near-black
+  hubcap:     "#BDBDBD", // Light grey
+  undercar:   "#37474F", // Dark grey
+  stripe:     "#FFFFFF", // White racing stripe
+  interior:   "#455A64", // Medium dark
+  mirror:     "#90A4AE", // Silver
+  spoiler:    "#0D47A1", // Dark blue
+  exhaust:    "#757575", // Grey
+  ground:     "#1A1A2E", // Ground
 };
 
 const bricks = [];
+function add(x, y, z, color) { bricks.push({ x, y, z, color }); }
 
-function addBrick(x, y, z, color) {
-  bricks.push({ x, y, z, color });
-}
+// ─── Car dimensions ───
+// Car faces along X axis. Length ~24, width ~10, height ~9
+// Y=0 is ground level
 
-function dist2D(x1, z1, x2, z2) {
-  return Math.sqrt((x1 - x2) ** 2 + (z1 - z2) ** 2);
-}
-
-// ─── Platform / base ───
-const PW = 44, PD = 44, PH = 2;
-const OX = -PW / 2, OZ = -PD / 2;
-
-for (let y = 0; y < PH; y++) {
-  for (let x = 0; x < PW; x++) {
-    for (let z = 0; z < PD; z++) {
-      const edgeDist = Math.min(x, PW - 1 - x, z, PD - 1 - z);
-      const color = edgeDist < 1 ? COLORS.sandstone : COLORS.platform;
-      addBrick(OX + x, y, OZ + z, color);
-    }
-  }
-}
-
-// ─── Reflecting pool / garden area ───
-for (let x = 10; x < PW - 10; x++) {
-  for (let z = 0; z < 8; z++) {
-    const gx = OX + x, gz = OZ + z + 2;
-    if (z >= 2 && z <= 5 && x >= 14 && x <= PW - 15) {
-      addBrick(gx, PH, gz, COLORS.teal);
-    }
-  }
-}
-
-// ─── Main building ───
-const BW = 20, BD = 20, BH = 14;
-const BX = -BW / 2, BZ = -BD / 2;
-const BY = PH;
-
-for (let y = 0; y < BH; y++) {
-  for (let x = 0; x < BW; x++) {
-    for (let z = 0; z < BD; z++) {
-      const isEdge = x === 0 || x === BW - 1 || z === 0 || z === BD - 1;
-      const isCorner =
-        (x <= 1 || x >= BW - 2) && (z <= 1 || z >= BD - 2);
-
-      // Arched openings on each face (center 6 units wide, bottom 8 units tall)
-      const midX = BW / 2, midZ = BD / 2;
-      const isArchFront = z === 0 && Math.abs(x - midX + 0.5) < 3 && y < 9 && y >= 1;
-      const isArchBack = z === BD - 1 && Math.abs(x - midX + 0.5) < 3 && y < 9 && y >= 1;
-      const isArchLeft = x === 0 && Math.abs(z - midZ + 0.5) < 3 && y < 9 && y >= 1;
-      const isArchRight = x === BW - 1 && Math.abs(z - midZ + 0.5) < 3 && y < 9 && y >= 1;
-
-      if (isArchFront || isArchBack || isArchLeft || isArchRight) continue;
-
-      if (isEdge) {
-        const color = isCorner ? COLORS.sandstone : COLORS.marble;
-        addBrick(BX + x, BY + y, BZ + z, color);
-      } else if (y === 0 || y === BH - 1) {
-        addBrick(BX + x, BY + y, BZ + z, COLORS.marbleLight);
-      }
-    }
-  }
-}
-
-// ─── Central dome ───
-const DOME_R = 9.5;
-const DOME_CY = BY + BH;
-const DOME_CX = 0, DOME_CZ = 0;
-
-for (let y = 0; y <= DOME_R; y++) {
-  const sliceR = Math.sqrt(Math.max(0, DOME_R * DOME_R - y * y));
-  for (let x = Math.floor(-DOME_R); x <= Math.ceil(DOME_R); x++) {
-    for (let z = Math.floor(-DOME_R); z <= Math.ceil(DOME_R); z++) {
-      const d = dist2D(x, z, 0, 0);
-      if (d <= sliceR && d >= sliceR - 1.5) {
-        addBrick(DOME_CX + x, DOME_CY + y, DOME_CZ + z, COLORS.dome);
-      }
-    }
-  }
-}
-// Dome finial (spire)
-for (let y = 0; y < 4; y++) {
-  addBrick(0, DOME_CY + Math.ceil(DOME_R) + y, 0, COLORS.minaretCap);
-}
-
-// ─── Corner chattris (small domed pavilions) ───
-const CHATTRI_OFFSETS = [
-  [BW / 2 - 1, BW / 2 - 1],
-  [-(BW / 2 - 1), BW / 2 - 1],
-  [BW / 2 - 1, -(BW / 2 - 1)],
-  [-(BW / 2 - 1), -(BW / 2 - 1)],
+// ─── Wheels (4) ───
+const wheelPositions = [
+  { cx: -7, cz: -5 },  // front-left
+  { cx: -7, cz: 5 },   // front-right
+  { cx: 7, cz: -5 },   // rear-left
+  { cx: 7, cz: 5 },    // rear-right
 ];
 
-for (const [cx, cz] of CHATTRI_OFFSETS) {
-  // Pillars
-  for (let y = 0; y < 5; y++) {
-    addBrick(cx, BY + BH + y, cz, COLORS.marble);
-    addBrick(cx + 1, BY + BH + y, cz, COLORS.marble);
-    addBrick(cx, BY + BH + y, cz + 1, COLORS.marble);
-    addBrick(cx + 1, BY + BH + y, cz + 1, COLORS.marble);
-  }
-  // Small dome
-  const cR = 2.5;
-  const cBaseY = BY + BH + 5;
-  for (let y = 0; y <= cR; y++) {
-    const sr = Math.sqrt(Math.max(0, cR * cR - y * y));
-    for (let dx = Math.floor(-cR); dx <= Math.ceil(cR); dx++) {
-      for (let dz = Math.floor(-cR); dz <= Math.ceil(cR); dz++) {
-        const d = dist2D(dx, dz, 0.5, 0.5);
-        if (d <= sr) {
-          addBrick(cx + dx, cBaseY + y, cz + dz, COLORS.dome);
+for (const { cx, cz } of wheelPositions) {
+  // Tire: disc shape, 3 wide (z), radius ~2
+  for (let dy = -1; dy <= 1; dy++) {
+    for (let dz = -1; dz <= 1; dz++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        const r = Math.sqrt(dx * dx + dy * dy);
+        if (r <= 1.5) {
+          add(cx + dx, 1 + dy, cz + dz, C.tire);
         }
       }
     }
   }
+  // Hubcap center
+  const outerZ = cz < 0 ? cz - 1 : cz + 1;
+  add(cx, 1, outerZ, C.hubcap);
 }
 
-// ─── Minarets ───
-const MINARET_H = 30;
-const MINARET_OFFSETS = [
-  [PW / 2 - 2 + OX, PD / 2 - 2 + OZ],
-  [-(PW / 2 - 2) - OX - 1, PD / 2 - 2 + OZ],
-  [PW / 2 - 2 + OX, -(PD / 2 - 2) - OZ - 1],
-  [-(PW / 2 - 2) - OX - 1, -(PD / 2 - 2) - OZ - 1],
-];
+// ─── Undercarriage / axle ───
+for (let x = -8; x <= 8; x++) {
+  for (let z = -3; z <= 3; z++) {
+    add(x, 0, z, C.undercar);
+  }
+}
 
-for (const [mx, mz] of MINARET_OFFSETS) {
-  for (let y = 0; y < MINARET_H; y++) {
-    // Circular cross-section, radius ~1.5
-    for (let dx = -1; dx <= 1; dx++) {
-      for (let dz = -1; dz <= 1; dz++) {
-        if (Math.abs(dx) + Math.abs(dz) <= 1 || (dx === 0 && dz === 0)) {
-          const color = y < MINARET_H - 3 ? COLORS.minaret : COLORS.minaretCap;
-          addBrick(mx + dx, PH + y, mz + dz, color);
-        }
+// ─── Chassis base (y=1..2) ───
+for (let y = 1; y <= 2; y++) {
+  for (let x = -10; x <= 10; x++) {
+    for (let z = -4; z <= 4; z++) {
+      // Rounded front and back
+      const frontDist = x + 10;
+      const backDist = 10 - x;
+      if (frontDist < 0 || backDist < 0) continue;
+
+      // Taper front
+      if (x <= -8 && (Math.abs(z) > 3 + (x + 10))) continue;
+      // Taper back
+      if (x >= 9 && (Math.abs(z) > 3 + (10 - x))) continue;
+
+      const isEdge = Math.abs(z) >= 4;
+      add(x, y, z, isEdge ? C.bumper : C.chassis);
+    }
+  }
+}
+
+// ─── Body panels (y=3..5) ───
+for (let y = 3; y <= 5; y++) {
+  for (let x = -9; x <= 9; x++) {
+    for (let z = -4; z <= 4; z++) {
+      // Taper front
+      if (x <= -7 && (Math.abs(z) > 3 + (x + 9))) continue;
+      // Taper back
+      if (x >= 8 && (Math.abs(z) > 3 + (9 - x))) continue;
+
+      const isEdge = Math.abs(z) >= 4 || x === -9 || x === 9;
+      const isHood = x <= -4 && y === 3;
+      const isTrunk = x >= 5 && y === 3;
+
+      // Racing stripe on top center
+      const isStripe = Math.abs(z) === 0 && y === 5 && x >= -6 && x <= 7;
+
+      // Body shell (walls + top)
+      if (isEdge || y === 3 || y === 5) {
+        let color = C.body;
+        if (isStripe) color = C.stripe;
+        else if (isHood || isTrunk) color = C.bodyAccent;
+        else if (y === 5) color = C.body;
+        add(x, y, z, color);
       }
     }
   }
-  // Minaret cap (small dome)
-  for (let dy = 0; dy < 3; dy++) {
-    addBrick(mx, PH + MINARET_H + dy, mz, COLORS.minaretCap);
+}
+
+// ─── Grill and headlights (front face) ───
+for (let z = -3; z <= 3; z++) {
+  for (let y = 2; y <= 4; y++) {
+    if (Math.abs(z) <= 1) {
+      add(-10, y, z, C.grill);
+    } else if (Math.abs(z) >= 2 && y <= 3) {
+      add(-10, y, z, C.headlight);
+    } else {
+      add(-10, y, z, C.bumper);
+    }
   }
 }
 
-// ─── Sort bricks bottom-to-top, then by distance from center per layer ───
+// ─── Taillights (rear face) ───
+for (let z = -3; z <= 3; z++) {
+  for (let y = 2; y <= 4; y++) {
+    if (Math.abs(z) >= 2 && y <= 3) {
+      add(10, y, z, C.taillight);
+    } else if (Math.abs(z) <= 1 && y === 2) {
+      add(10, y, z, C.exhaust);
+    } else {
+      add(10, y, z, C.bumper);
+    }
+  }
+}
+
+// ─── Cabin / windshield (y=6..8) ───
+for (let y = 6; y <= 8; y++) {
+  for (let x = -3; x <= 4; x++) {
+    for (let z = -3; z <= 3; z++) {
+      // Taper windshield at front
+      if (x <= -2 && y >= 7 && Math.abs(z) > 2) continue;
+
+      const isEdge = Math.abs(z) >= 3 || x === -3 || x === 4;
+      const isTop = y === 8;
+
+      if (isEdge || isTop) {
+        let color;
+        if (isTop) {
+          color = C.roof;
+        } else if (x === -3 || x === 4) {
+          // Front/rear windshield
+          color = C.window;
+        } else if (Math.abs(z) >= 3) {
+          // Side windows
+          color = y === 6 ? C.windowTrim : C.window;
+        } else {
+          color = C.body;
+        }
+        add(x, y, z, color);
+      } else if (y === 6) {
+        // Interior floor
+        add(x, y, z, C.interior);
+      }
+    }
+  }
+}
+
+// ─── Side mirrors ───
+add(-2, 6, -5, C.mirror);
+add(-2, 6, 5, C.mirror);
+
+// ─── Spoiler (rear) ───
+for (let z = -3; z <= 3; z++) {
+  add(5, 6, z, C.spoiler);
+  add(6, 6, z, C.spoiler);
+}
+for (let z = -3; z <= 3; z++) {
+  add(6, 7, z, C.spoiler);
+}
+
+// ─── Bumper details ───
+// Front bumper
+for (let z = -4; z <= 4; z++) {
+  add(-11, 1, z, Math.abs(z) > 3 ? C.bumper : C.grill);
+  add(-11, 2, z, C.bumper);
+}
+// Rear bumper
+for (let z = -4; z <= 4; z++) {
+  add(11, 1, z, C.bumper);
+  add(11, 2, z, Math.abs(z) >= 3 ? C.taillight : C.exhaust);
+}
+
+// ─── Sort bricks bottom-to-top, then front-to-back per layer ───
 bricks.sort((a, b) => {
   if (a.y !== b.y) return a.y - b.y;
-  const da = dist2D(a.x, a.z, 0, 0);
-  const db = dist2D(b.x, b.z, 0, 0);
-  return da - db;
+  return a.x - b.x;
 });
 
-// ─── De-duplicate (same x,y,z keeps last) ───
+// ─── De-duplicate ───
 const seen = new Set();
 const deduped = [];
 for (let i = bricks.length - 1; i >= 0; i--) {
@@ -192,12 +223,18 @@ for (let i = bricks.length - 1; i >= 0; i--) {
 deduped.reverse();
 deduped.sort((a, b) => {
   if (a.y !== b.y) return a.y - b.y;
-  const da = dist2D(a.x, a.z, 0, 0);
-  const db = dist2D(b.x, b.z, 0, 0);
-  return da - db;
+  return a.x - b.x;
 });
 
 const outPath = resolve(__dirname, "../public/data/taj-mahal-bricks.json");
 writeFileSync(outPath, JSON.stringify(deduped));
 
+const colorCounts = {};
+for (const b of deduped) {
+  colorCounts[b.color] = (colorCounts[b.color] || 0) + 1;
+}
 console.log(`Generated ${deduped.length} bricks -> ${outPath}`);
+console.log("Color breakdown:");
+for (const [c, n] of Object.entries(colorCounts).sort((a, b) => b[1] - a[1])) {
+  console.log(`  ${c}: ${n} bricks`);
+}
