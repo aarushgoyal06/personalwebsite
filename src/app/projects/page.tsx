@@ -1,43 +1,16 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
+import { getAllProjects } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "Projects | Aarush Goyal",
   description: "A collection of projects and experiments.",
 };
 
-const projects = [
-  {
-    title: "Personal Website",
-    description:
-      "This site! A scroll-driven terminal hero, file-based blog, and blue-on-black UI — Next.js and Tailwind.",
-    tech: ["Next.js", "Tailwind CSS"],
-    link: "https://github.com/aarushgoyal06",
-  },
-  {
-    title: "Project Alpha",
-    description:
-      "A full-stack web application that solves a real-world problem. Features real-time data processing and a clean UI.",
-    tech: ["React", "Node.js", "PostgreSQL", "Docker"],
-    link: "#",
-  },
-  {
-    title: "Project Beta",
-    description:
-      "An experimental creative coding project exploring generative art and interactive visuals.",
-    tech: ["Three.js", "GLSL", "TypeScript"],
-    link: "#",
-  },
-  {
-    title: "Project Gamma",
-    description:
-      "A CLI tool that automates tedious developer workflows and boosts productivity.",
-    tech: ["Python", "Click", "APIs"],
-    link: "#",
-  },
-];
-
 export default function ProjectsPage() {
+  const projects = getAllProjects();
+
   return (
     <div className="pt-24 pb-16 max-w-4xl mx-auto px-6">
       <h1 className="text-3xl font-bold mb-4">Projects</h1>
@@ -48,34 +21,62 @@ export default function ProjectsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {projects.map((project) => (
           <Link
-            key={project.title}
-            href={project.link}
-            target={project.link.startsWith("http") ? "_blank" : undefined}
+            key={project.slug}
+            href={project.demo || project.repo}
+            target={(project.demo || project.repo).startsWith("http")
+              ? "_blank"
+              : undefined}
             rel={
-              project.link.startsWith("http")
+              (project.demo || project.repo).startsWith("http")
                 ? "noopener noreferrer"
                 : undefined
             }
-            className="group block p-6 rounded-xl border border-blue-500/10 bg-blue-500/[0.02] hover:bg-blue-500/[0.06] hover:border-blue-500/20 transition-all"
+            className="group block p-6 rounded-xl border border-[color-mix(in_srgb,var(--accent)_10%,transparent)] bg-[color-mix(in_srgb,var(--accent)_3%,transparent)] hover:bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] hover:border-[color-mix(in_srgb,var(--accent)_20%,transparent)] transition-all"
           >
-            <h2 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-300">
-              {project.title}
-              <span className="inline-block ml-2 transition-transform group-hover:translate-x-1 text-slate-500">
-                &rarr;
-              </span>
-            </h2>
-            <p className="text-slate-400 text-sm leading-relaxed mb-4">
-              {project.description}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="text-xs px-2 py-1 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/10"
-                >
-                  {t}
-                </span>
-              ))}
+            <div
+              className={
+                project.coverImage
+                  ? "flex gap-6 items-start"
+                  : "block"
+              }
+            >
+              {project.coverImage && (
+                <div className="flex-shrink-0 w-40">
+                  <div className="aspect-[4/3] w-full overflow-hidden rounded-lg border border-[color-mix(in_srgb,var(--accent)_18%,transparent)] bg-[#050a12]">
+                    <Image
+                      src={project.coverImage}
+                      alt={`${project.title} cover image`}
+                      fill
+                      sizes="160px"
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="min-w-0 flex-1">
+                <h2 className="text-lg font-semibold text-white mb-2 group-hover:text-[var(--accent)]">
+                  {project.title}
+                  <span className="inline-block ml-2 transition-transform group-hover:translate-x-1 text-slate-500">
+                    &rarr;
+                  </span>
+                </h2>
+                <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                  {project.description}
+                </p>
+                {project.tech?.length ? (
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="text-xs px-2 py-1 rounded-md bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] text-[var(--accent)] border border-[color-mix(in_srgb,var(--accent)_18%,transparent)]"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             </div>
           </Link>
         ))}

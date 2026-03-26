@@ -92,6 +92,7 @@ type InteractiveLine =
 export default function TerminalHero() {
   const shellRef = useRef<HTMLElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const interactiveBodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const inputId = useId();
@@ -109,7 +110,12 @@ export default function TerminalHero() {
   useEffect(() => {
     if (!bodyRef.current) return;
     bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
-  }, [step, interactive]);
+  }, [step]);
+
+  useEffect(() => {
+    if (!interactiveBodyRef.current) return;
+    interactiveBodyRef.current.scrollTop = interactiveBodyRef.current.scrollHeight;
+  }, [interactive, unlocked]);
 
   useEffect(() => {
     if (unlocked) {
@@ -232,7 +238,11 @@ export default function TerminalHero() {
       className="relative"
       style={{ minHeight: `${(1 + Math.max(n, 1)) * 100}vh` }}
     >
-      <div className="sticky top-0 flex min-h-screen w-full items-center justify-center px-4 pt-20 pb-16">
+      <div
+        className={`sticky top-0 flex min-h-screen w-full flex-col items-center gap-8 px-4 pt-20 pb-16 ${
+          unlocked ? "justify-start" : "justify-center"
+        }`}
+      >
         <div className="flex w-full max-w-[90rem] flex-col items-center justify-center gap-8 lg:flex-row lg:items-start lg:justify-center lg:gap-10">
           <div className="relative w-full max-w-3xl shrink-0">
             <div className="overflow-hidden rounded-xl border-2 bg-[#050a12] shadow-2xl shadow-black/40 terminal-shell-border">
@@ -273,42 +283,72 @@ export default function TerminalHero() {
                 </p>
               )}
 
-              {interactive.map((row, i) =>
-                row.kind === "in" ? (
-                  <div
-                    key={`i-${i}`}
-                    className="mt-4 flex flex-wrap gap-x-2 border-l-2 pl-4 terminal-shell-accent-line"
-                  >
-                    <span className="shrink-0 text-[var(--accent)]">
-                      {PROMPT}
-                    </span>
-                    <span className="text-emerald-400">{row.text}</span>
-                  </div>
-                ) : (
-                  <pre
-                    key={`o-${i}`}
-                    className="mt-2 whitespace-pre-wrap pl-4 text-slate-300"
-                  >
-                    {row.lines.join("\n")}
-                  </pre>
-                )
-              )}
+            </div>
+            </div>
 
-              {unlocked && (
+            <p
+              className={
+                unlocked
+                  ? "mt-6 text-center text-sm text-slate-400"
+                  : "mt-6 text-center text-xs text-slate-600"
+              }
+            >
+              {unlocked
+                ? "↓ Use the interactive terminal below — or keep exploring the site."
+                : "Scroll — each segment runs the next command (first one appears quickly)."}
+            </p>
+          </div>
+          <NowPlayingWidget className="w-full max-w-md shrink-0 lg:sticky lg:top-24 lg:w-96 lg:max-w-none" />
+        </div>
+
+        {unlocked && (
+          <div className="w-full max-w-3xl lg:max-w-[calc(48rem+2.5rem+24rem)]">
+            <div className="overflow-hidden rounded-xl border-2 bg-[#050a12] shadow-2xl shadow-black/40 terminal-shell-border">
+              <div className="flex items-center gap-2 px-4 py-2.5 terminal-shell-titlebar">
+                <span className="h-3 w-3 rounded-full bg-red-500/80" />
+                <span className="h-3 w-3 rounded-full bg-amber-500/80" />
+                <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
+                <span className="ml-2 font-mono text-xs text-slate-500">
+                  portfolio — interactive
+                </span>
+              </div>
+              <div
+                ref={interactiveBodyRef}
+                className="max-h-[min(52vh,480px)] overflow-y-auto p-5 font-mono text-sm leading-relaxed text-slate-200 md:text-[15px]"
+              >
+                <p className="mb-4 text-slate-500">
+                  Live shell — run commands, open pages, change the theme. Try{" "}
+                  <kbd className="rounded bg-slate-800 px-1.5 py-0.5 text-[var(--accent)]">
+                    help
+                  </kbd>{" "}
+                  first.
+                </p>
+                {interactive.map((row, i) =>
+                  row.kind === "in" ? (
+                    <div
+                      key={`i-${i}`}
+                      className="mt-4 flex flex-wrap gap-x-2 border-l-2 pl-4 terminal-shell-accent-line"
+                    >
+                      <span className="shrink-0 text-[var(--accent)]">
+                        {PROMPT}
+                      </span>
+                      <span className="text-emerald-400">{row.text}</span>
+                    </div>
+                  ) : (
+                    <pre
+                      key={`o-${i}`}
+                      className="mt-2 whitespace-pre-wrap pl-4 text-slate-300"
+                    >
+                      {row.lines.join("\n")}
+                    </pre>
+                  )
+                )}
                 <div className="mt-6 border-t border-[color-mix(in_srgb,var(--accent)_18%,transparent)] pt-4">
-                  <p className="mb-3 text-xs uppercase tracking-wider text-slate-500">
-                    Interactive shell — try{" "}
-                    <kbd className="rounded bg-slate-800 px-1.5 py-0.5 text-[var(--accent)]">
-                      help
-                    </kbd>
-                  </p>
                   <div className="flex flex-wrap items-center gap-x-2">
                     <label htmlFor={inputId} className="sr-only">
-                      Terminal command
+                      Interactive terminal command
                     </label>
-                    <span className="shrink-0 text-[var(--accent)]">
-                      {PROMPT}
-                    </span>
+                    <span className="shrink-0 text-[var(--accent)]">{PROMPT}</span>
                     <input
                       ref={inputRef}
                       id={inputId}
@@ -323,18 +363,10 @@ export default function TerminalHero() {
                     />
                   </div>
                 </div>
-              )}
+              </div>
             </div>
-            </div>
-
-            <p className="mt-6 text-center text-xs text-slate-600">
-              {unlocked
-                ? "Scroll is done — use the shell above, or keep exploring below."
-                : "Scroll — each segment runs the next command (first one appears quickly)."}
-            </p>
           </div>
-          <NowPlayingWidget className="w-full max-w-md shrink-0 lg:sticky lg:top-24 lg:w-96 lg:max-w-none" />
-        </div>
+        )}
       </div>
     </section>
   );
