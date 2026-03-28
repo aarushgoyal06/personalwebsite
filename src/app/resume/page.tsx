@@ -83,20 +83,21 @@ const skills = {
 export default function ResumePage() {
   return (
     <div className="pt-24 pb-16 max-w-3xl mx-auto px-6">
-      <div className="flex items-center justify-between mb-12">
-        <h1 className="text-3xl font-bold">Resume</h1>
-        <a
-          href="/Aarush_s_Resume.pdf"
-          target="_blank"
-          className="text-sm px-4 py-2 rounded-lg border border-blue-500/20 text-blue-400 hover:bg-blue-500/10 transition-colors"
-        >
-          Download PDF
-        </a>
-      </div>
+      <div className="rounded-2xl border border-[color-mix(in_srgb,var(--accent)_24%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,var(--accent)_10%)] p-6 shadow-[0_1px_0_rgba(0,0,0,0.4)] md:p-8">
+        <div className="mb-12 flex items-center justify-between">
+          <h1 className="text-3xl font-bold">Resume</h1>
+          <a
+            href="/Aarush_s_Resume.pdf"
+            target="_blank"
+            className="text-sm px-4 py-2 rounded-lg border border-[color-mix(in_srgb,var(--accent)_35%,transparent)] bg-[color-mix(in_srgb,var(--background)_88%,var(--accent)_12%)] text-[var(--accent)] shadow-[0_1px_0_rgba(0,0,0,0.35)] transition-colors hover:bg-[color-mix(in_srgb,var(--background)_78%,var(--accent)_22%)]"
+          >
+            Download PDF
+          </a>
+        </div>
 
       {/* Education */}
       <section className="mb-12">
-        <h2 className="text-xl font-semibold mb-4 text-blue-300">Education</h2>
+        <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">Education</h2>
         {education.map((edu, i) => (
           <div key={i} className="mb-4">
             <div className="flex justify-between items-start">
@@ -109,7 +110,7 @@ export default function ResumePage() {
                 <span className="text-slate-600 text-xs">{edu.location}</span>
               </div>
             </div>
-            <p className="text-blue-400/80 text-sm mt-1">{edu.details}</p>
+            <p className="text-[color-mix(in_srgb,var(--accent)_80%,#cbd5e1)] text-sm mt-1">{edu.details}</p>
             <p className="text-slate-500 text-xs mt-1">
               <span className="text-slate-400">Coursework:</span> {edu.coursework}
             </p>
@@ -119,7 +120,7 @@ export default function ResumePage() {
 
       {/* Experience */}
       <section className="mb-12">
-        <h2 className="text-xl font-semibold mb-4 text-blue-300">Experience</h2>
+        <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">Experience</h2>
         {experience.map((exp, i) => (
           <div key={i} className="mb-8">
             <div className="flex justify-between items-start">
@@ -135,7 +136,7 @@ export default function ResumePage() {
             <ul className="mt-2 space-y-1.5">
               {exp.bullets.map((b, j) => (
                 <li key={j} className="text-slate-400 text-sm pl-4 relative">
-                  <span className="absolute left-0 text-blue-500">•</span>
+                  <span className="absolute left-0 text-[var(--accent)]">•</span>
                   {b}
                 </li>
               ))}
@@ -146,7 +147,7 @@ export default function ResumePage() {
 
       {/* Activities */}
       <section className="mb-12">
-        <h2 className="text-xl font-semibold mb-4 text-blue-300">Activities</h2>
+        <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">Activities</h2>
         {activities.map((act, i) => (
           <div key={i} className="mb-4">
             <div className="flex justify-between items-start">
@@ -162,7 +163,7 @@ export default function ResumePage() {
 
       {/* Skills */}
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-blue-300">
+        <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">
           Technical Skills
         </h2>
         <div className="space-y-3">
@@ -178,6 +179,7 @@ export default function ResumePage() {
           ))}
         </div>
       </section>
+      </div>
     </div>
   );
 }

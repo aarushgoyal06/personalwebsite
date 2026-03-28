@@ -28,7 +28,7 @@ export const terminalCommands: TerminalBlock[] = [
   {
     command: "ls -1 ./currently",
     output:
-      "jpmorgan_internship_summary.md\n" +
+      "sophmore_year_atUD.md\n" +
       "sensify_lab_experiments/\n" +
       "this_website/",
   },

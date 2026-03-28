@@ -31,7 +31,7 @@ export default function ProjectsPage() {
                 ? "noopener noreferrer"
                 : undefined
             }
-            className="group block p-6 rounded-xl border border-[color-mix(in_srgb,var(--accent)_10%,transparent)] bg-[color-mix(in_srgb,var(--accent)_3%,transparent)] hover:bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] hover:border-[color-mix(in_srgb,var(--accent)_20%,transparent)] transition-all"
+            className="group block p-6 rounded-xl border border-[color-mix(in_srgb,var(--accent)_22%,transparent)] bg-[color-mix(in_srgb,var(--background)_88%,var(--accent)_12%)] shadow-[0_1px_0_rgba(0,0,0,0.35)] transition-all hover:border-[color-mix(in_srgb,var(--accent)_34%,transparent)] hover:bg-[color-mix(in_srgb,var(--background)_78%,var(--accent)_22%)]"
           >
             <div
               className={
@@ -69,7 +69,7 @@ export default function ProjectsPage() {
                     {project.tech.map((t) => (
                       <span
                         key={t}
-                        className="text-xs px-2 py-1 rounded-md bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] text-[var(--accent)] border border-[color-mix(in_srgb,var(--accent)_18%,transparent)]"
+                        className="text-xs px-2 py-1 rounded-md border border-[color-mix(in_srgb,var(--accent)_30%,transparent)] bg-[color-mix(in_srgb,var(--background)_85%,var(--accent)_15%)] text-[var(--accent)]"
                       >
                         {t}
                       </span>

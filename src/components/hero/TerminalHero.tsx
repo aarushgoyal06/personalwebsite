@@ -215,7 +215,6 @@ export default function TerminalHero() {
       }
 
       setInteractive((prev) => [...prev, { kind: "in", text: line }]);
-
       const lines = runEffect(effect);
       if (lines.length) {
         setInteractive((prev) => [...prev, { kind: "out", lines }]);
@@ -295,7 +294,7 @@ export default function TerminalHero() {
             >
               {unlocked
                 ? "↓ Use the interactive terminal below — or keep exploring the site."
-                : "Scroll — each segment runs the next command (first one appears quickly)."}
+                : ""}
             </p>
           </div>
           <NowPlayingWidget className="w-full max-w-md shrink-0 lg:sticky lg:top-24 lg:w-96 lg:max-w-none" />

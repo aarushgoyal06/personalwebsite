@@ -40,7 +40,7 @@ export default function BlogPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group block p-6 rounded-xl border border-blue-500/10 bg-blue-500/[0.02] hover:bg-blue-500/[0.06] hover:border-blue-500/20 transition-all"
+                className="group block p-6 rounded-xl border border-[color-mix(in_srgb,var(--accent)_20%,transparent)] bg-[color-mix(in_srgb,var(--background)_88%,var(--accent)_12%)] hover:bg-[color-mix(in_srgb,var(--background)_78%,var(--accent)_22%)] hover:border-[color-mix(in_srgb,var(--accent)_32%,transparent)] transition-all shadow-[0_1px_0_rgba(0,0,0,0.35)]"
               >
                 <div className="flex items-center gap-3 text-xs text-slate-500 mb-2">
                   {date && <time>{date}</time>}
@@ -51,7 +51,7 @@ export default function BlogPage() {
                     </>
                   )}
                 </div>
-                <h2 className="text-lg font-semibold text-white mb-1 group-hover:text-blue-300">
+                <h2 className="text-lg font-semibold text-white mb-1 group-hover:text-[color-mix(in_srgb,var(--accent)_90%,white)]">
                   {post.title}
                 </h2>
                 {post.excerpt && (

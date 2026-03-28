@@ -49,7 +49,7 @@ export default function ContactPage() {
             id="name"
             name="name"
             required
-            className="w-full px-4 py-3 rounded-lg bg-blue-500/5 border border-blue-500/15 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-lg bg-[color-mix(in_srgb,var(--accent)_7%,transparent)] border border-[color-mix(in_srgb,var(--accent)_22%,transparent)] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent)_38%,transparent)] focus:border-transparent transition-all"
             placeholder="Your name"
           />
         </div>
@@ -66,7 +66,7 @@ export default function ContactPage() {
             id="email"
             name="email"
             required
-            className="w-full px-4 py-3 rounded-lg bg-blue-500/5 border border-blue-500/15 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-lg bg-[color-mix(in_srgb,var(--accent)_7%,transparent)] border border-[color-mix(in_srgb,var(--accent)_22%,transparent)] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent)_38%,transparent)] focus:border-transparent transition-all"
             placeholder="you@example.com"
           />
         </div>
@@ -83,20 +83,20 @@ export default function ContactPage() {
             name="message"
             rows={5}
             required
-            className="w-full px-4 py-3 rounded-lg bg-blue-500/5 border border-blue-500/15 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-transparent transition-all resize-none"
+            className="w-full px-4 py-3 rounded-lg bg-[color-mix(in_srgb,var(--accent)_7%,transparent)] border border-[color-mix(in_srgb,var(--accent)_22%,transparent)] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent)_38%,transparent)] focus:border-transparent transition-all resize-none"
             placeholder="What's on your mind?"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors"
+          className="w-full py-3 rounded-lg bg-[color-mix(in_srgb,var(--accent)_68%,black)] text-white font-medium hover:bg-[color-mix(in_srgb,var(--accent)_78%,black)] transition-colors"
         >
           Send Message
         </button>
       </form>
 
-      <div className="border-t border-blue-500/10 pt-8">
+      <div className="border-t border-[color-mix(in_srgb,var(--accent)_16%,transparent)] pt-8">
         <h2 className="text-lg font-semibold mb-4 text-slate-300">
           Find me elsewhere
         </h2>
@@ -107,9 +107,9 @@ export default function ContactPage() {
               href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-500/15 hover:bg-blue-500/10 transition-colors text-sm text-slate-300 hover:text-blue-300"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[color-mix(in_srgb,var(--accent)_22%,transparent)] hover:bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] transition-colors text-sm text-slate-300 hover:text-[var(--accent)]"
             >
-              <span className="font-mono text-xs text-blue-400">{s.icon}</span>
+              <span className="font-mono text-xs text-[var(--accent)]">{s.icon}</span>
               {s.label}
             </a>
           ))}
