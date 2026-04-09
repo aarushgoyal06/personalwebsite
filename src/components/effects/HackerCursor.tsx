@@ -134,12 +134,8 @@ export default function HackerCursor() {
             : "brightness(1) drop-shadow(0 0 2px color-mix(in srgb, var(--accent) 24%, transparent))",
         }}
       >
-        <div className="cube-cursor-perspective flex items-center justify-center">
-          <div className="cube-cursor-spin-y">
-            <div className="cube-cursor-spin-x">
-              <CubeWireframeMark bright={interactive} />
-            </div>
-          </div>
+        <div className="cube-cursor-spin">
+          <CubeWireframeMark bright={interactive} />
         </div>
       </div>
     </div>

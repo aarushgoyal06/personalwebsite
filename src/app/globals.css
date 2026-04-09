@@ -26,37 +26,21 @@ html.custom-cursor *::after {
   cursor: none !important;
 }
 
-/* 3D tumbling wireframe cube: nested Y/X spins + perspective */
-.cube-cursor-perspective {
+/* Wireframe cube cursor: single in-plane rotation */
+.cube-cursor-spin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 34px;
   height: 34px;
-  perspective: 90px;
-  perspective-origin: 50% 50%;
-}
-
-.cube-cursor-spin-y {
-  transform-style: preserve-3d;
   transform-origin: center center;
-  animation: cube-cursor-y 16s linear infinite;
+  animation: cube-cursor-rotate 12s linear infinite;
   will-change: transform;
 }
 
-.cube-cursor-spin-x {
-  transform-style: preserve-3d;
-  transform-origin: center center;
-  animation: cube-cursor-x 11s linear infinite;
-  will-change: transform;
-}
-
-@keyframes cube-cursor-y {
+@keyframes cube-cursor-rotate {
   to {
-    transform: rotateY(360deg);
-  }
-}
-
-@keyframes cube-cursor-x {
-  to {
-    transform: rotateX(360deg);
+    transform: rotate(360deg);
   }
 }
 
