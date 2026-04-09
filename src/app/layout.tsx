@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SiteThemeHydration from "@/components/SiteThemeHydration";
 import HackerBackdrop from "@/components/effects/HackerBackdrop";
+import HackerCursor from "@/components/effects/HackerCursor";
 
 export const metadata: Metadata = {
   title: {
@@ -42,6 +43,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <SiteThemeHydration />
+        <HackerCursor />
         <HackerBackdrop />
         <Navbar />
         <main className="relative z-10">{children}</main>

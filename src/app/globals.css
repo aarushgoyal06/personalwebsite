@@ -18,6 +18,23 @@ body {
     sans-serif;
 }
 
+/* Custom cursor (HackerCursor) — baseline; stronger rules are also injected from the component. */
+html.custom-cursor,
+html.custom-cursor *,
+html.custom-cursor *::before,
+html.custom-cursor *::after {
+  cursor: none !important;
+}
+
+/* 4D tesseract wireframe: CursorTesseractCanvas (canvas, auto-fit inside) */
+.hypercube-cursor-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+}
+
 /* Subtle accent-tinted shell border (updates when --accent changes) */
 .terminal-shell-border {
   border-color: color-mix(in srgb, var(--accent) 32%, transparent);
