@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { buildCubeWireframePath } from "@/lib/cursor-cube-wireframe";
+import CursorTesseractCanvas from "./CursorTesseractCanvas";
 
 const INTERACTIVE =
   "a[href], button, [role='button'], [role='link'], input, textarea, select, label, summary";
 
-const CUBE_PATH = buildCubeWireframePath();
+/** Box-shadow on the wrapper reads as a square “aura”; glow lives on the canvas only. */
+const HOVER_TRANSITION = "transform 200ms linear, opacity 200ms linear";
 
 /** Injected at end of <head> so it wins over Tailwind and any layered CSS. */
 const CURSOR_HIDE_CSS = `
@@ -17,30 +18,6 @@ html.custom-cursor *::after {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'/%3E") 0 0, none !important;
 }
 `;
-
-function CubeWireframeMark({ bright }: { bright: boolean }) {
-  const stroke = "currentColor";
-  return (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 32 32"
-      fill="none"
-      className="overflow-visible transition-[opacity] duration-200"
-      aria-hidden
-    >
-      <path
-        d={CUBE_PATH}
-        stroke={stroke}
-        strokeWidth={bright ? 1.15 : 0.95}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="nonScalingStroke"
-        opacity={bright ? 1 : 0.88}
-      />
-    </svg>
-  );
-}
 
 export default function HackerCursor() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -113,6 +90,8 @@ export default function HackerCursor() {
 
   if (!active) return null;
 
+  const hover = interactive;
+
   return (
     <div
       ref={rootRef}
@@ -125,17 +104,15 @@ export default function HackerCursor() {
       aria-hidden
     >
       <div
-        className="-translate-x-1/2 -translate-y-1/2 origin-center transition-[filter,opacity,transform] duration-300 ease-out"
+        className="-translate-x-1/2 -translate-y-1/2 origin-center"
         style={{
-          opacity: interactive ? 1 : 0.82,
-          transform: interactive ? "scale(1.22)" : "scale(1)",
-          filter: interactive
-            ? "brightness(1.35) drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 55%, transparent)) drop-shadow(0 0 3px color-mix(in srgb, var(--accent) 70%, white))"
-            : "brightness(1) drop-shadow(0 0 2px color-mix(in srgb, var(--accent) 24%, transparent))",
+          transition: HOVER_TRANSITION,
+          opacity: hover ? 1 : 0.88,
+          transform: hover ? "scale(1.1)" : "scale(1)",
         }}
       >
-        <div className="cube-cursor-spin">
-          <CubeWireframeMark bright={interactive} />
+        <div className="hypercube-cursor-stage">
+          <CursorTesseractCanvas interactive={hover} />
         </div>
       </div>
     </div>

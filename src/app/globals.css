@@ -26,22 +26,13 @@ html.custom-cursor *::after {
   cursor: none !important;
 }
 
-/* Wireframe cube cursor: single in-plane rotation */
-.cube-cursor-spin {
+/* 4D tesseract wireframe: CursorTesseractCanvas (canvas, auto-fit inside) */
+.hypercube-cursor-stage {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  transform-origin: center center;
-  animation: cube-cursor-rotate 12s linear infinite;
-  will-change: transform;
-}
-
-@keyframes cube-cursor-rotate {
-  to {
-    transform: rotate(360deg);
-  }
+  width: 48px;
+  height: 48px;
 }
 
 /* Subtle accent-tinted shell border (updates when --accent changes) */
