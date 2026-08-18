@@ -7,6 +7,16 @@ export const metadata: Metadata = {
 
 const experience = [
   {
+    role: "Software Engineer Intern",
+    company: "Best Egg",
+    location: "Wilmington, DE",
+    period: "May 2026 – Aug 2026",
+    bullets: [
+      "Shipped an AWS Lambda + Terraform stack for automated DynamoDB cleanup: wrote retention logic, wired IAM + EventBridge cron scheduling, and validated across environments.",
+      "Designed and implemented an on-time delivery metric for affiliate loan reports, with a Python classifier that queries PostgreSQL EEV events, handles daily/weekly/monthly SLAs, and excludes manual debut runs and re-runs.",
+    ],
+  },
+  {
     role: "Software Engineer Consultant",
     company: "JPMorganChase",
     location: "Wilmington, DE",
@@ -14,7 +24,6 @@ const experience = [
     bullets: [
       "Developed an AWS Lambda function in Python to automate payment reconciliation workflows, reducing manual processing time by 35% and improving transaction accuracy.",
       "Built and configured the Lambda using Jules, then deployed it via Spinnaker using CI/CD best practices to ensure secure, reliable production releases.",
-      "Collaborated in an Agile Scrum environment, using Jira to manage sprint tasks, track progress, and coordinate deliverables across a cross-functional engineering team.",
     ],
   },
   {
@@ -23,7 +32,6 @@ const experience = [
     location: "Bear, DE",
     period: "Sept 2024 – May 2025",
     bullets: [
-      "Created the 2025 fiscal year budget using Wisdom, aligning spending with risk assessments, compliance requirements, and projected technology upgrades.",
       "Configured and maintained Cisco Meraki routers, firewalls, and access points, optimizing network segmentation and improving system security posture.",
       "Assisted in developing incident response and disaster recovery playbooks, ensuring preparedness for ransomware, phishing, and insider threat scenarios.",
     ],
@@ -35,8 +43,7 @@ const experience = [
     period: "June 2022 – Sept 2024",
     bullets: [
       "Delivered frontline financial services to an average of 50+ members daily, managing transactions, account openings, and loan processing with 100% accuracy.",
-      "Guided members through digital banking platforms and mobile applications, increasing online engagement and reducing in-branch wait times by 15%.",
-      "Built rapport with a diverse customer base through personalized financial recommendations, resulting in repeat business and positive member satisfaction scores.",
+      "Guided members through digital banking platforms and mobile applications, increasing online engagement and reducing in-branch wait times.",
     ],
   },
 ];
@@ -45,11 +52,12 @@ const education = [
   {
     school: "University of Delaware",
     location: "Newark, DE",
-    degree: "B.S. Computer Science, B.S. Mathematics",
-    period: "Aug 2024 – May 2027",
-    details: "3.96 GPA · Trustee Scholar · Honors",
+    degree:
+      "B.S. Computer Science, B.S. Mathematics, Minor in Economics",
+    period: "May 2028",
+    details: "4.0 GPA · Honors",
     coursework:
-      "Calculus III, Intro to Systems Programming, Data Structures, Machine Organization & Assembly Language, Discrete Math, Linear Algebra, Intro to SWE, Automata Theory",
+      "Data Structures & Algorithms, Systems Programming, Machine Organization & Assembly Language, Linear Algebra, Automata Theory, Calculus III, Intro to SWE",
   },
 ];
 
@@ -64,7 +72,7 @@ const activities = [
     name: "Delta Kappa Epsilon · Fraternity",
     period: "Sept 2024 – Present",
     description:
-      "Recruitment Chair (Spring '25) — founded and doubled chapter size from 8 to 20 in one year. Health and Safety Chair (Spring '26) — oversaw risk management policies and event compliance.",
+      "Recruitment Chair (Spring '25) — founded and doubled chapter size from 8 to 20 in one year. Health and Safety Chair (Spring '26) — oversaw risk management policies and event compliance, ensuring safety standards while supporting smooth chapter operations.",
   },
   {
     name: "Kamaal · Bollywood Dance Team",
@@ -75,9 +83,36 @@ const activities = [
 ];
 
 const skills = {
-  Languages: ["Python", "C", "TypeScript", "Java", "C++", "JavaScript", "HTML", "CSS"],
-  Certifications: ["AWS Certified Cloud Practitioner"],
-  "Developer Tools": ["VS Code", "CLion"],
+  Languages: [
+    "Python",
+    "C",
+    "C++",
+    "Java",
+    "TypeScript",
+    "JavaScript",
+    "HTML",
+    "CSS",
+  ],
+  Frameworks: ["React", "Node.js"],
+  "Cloud / Infrastructure": [
+    "AWS",
+    "Lambda",
+    "S3",
+    "DynamoDB",
+    "Terraform",
+  ],
+  "Developer Tools": [
+    "GitHub",
+    "Cursor",
+    "PostgreSQL",
+    "Datadog",
+    "Octo",
+    "Postman",
+  ],
+  "Certifications & Awards": [
+    "AWS Certified Cloud Practitioner — Amazon Web Services (2025)",
+    "Best Automation Systems & Public Infrastructure Hack — HenHacks — 1st of 40+ teams (2026)",
+  ],
 };
 
 export default function ResumePage() {
@@ -87,98 +122,114 @@ export default function ResumePage() {
         <div className="mb-12 flex items-center justify-between">
           <h1 className="text-3xl font-bold">Resume</h1>
           <a
-            href="/Aarush_s_Resume.pdf"
+            href="/data/Aarush_s_Resume.pdf"
             target="_blank"
+            rel="noopener noreferrer"
             className="text-sm px-4 py-2 rounded-lg border border-[color-mix(in_srgb,var(--accent)_35%,transparent)] bg-[color-mix(in_srgb,var(--background)_88%,var(--accent)_12%)] text-[var(--accent)] shadow-[0_1px_0_rgba(0,0,0,0.35)] transition-colors hover:bg-[color-mix(in_srgb,var(--background)_78%,var(--accent)_22%)]"
           >
             Download PDF
           </a>
         </div>
 
-      {/* Education */}
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">Education</h2>
-        {education.map((edu, i) => (
-          <div key={i} className="mb-4">
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="font-medium text-white">{edu.school}</h3>
-                <p className="text-slate-400 text-sm">{edu.degree}</p>
+        {/* Education */}
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">
+            Education
+          </h2>
+          {education.map((edu, i) => (
+            <div key={i} className="mb-4">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-medium text-white">{edu.school}</h3>
+                  <p className="text-slate-400 text-sm">{edu.degree}</p>
+                </div>
+                <div className="text-right shrink-0 ml-4">
+                  <span className="text-slate-500 text-sm block">
+                    {edu.period}
+                  </span>
+                  <span className="text-slate-600 text-xs">{edu.location}</span>
+                </div>
               </div>
-              <div className="text-right shrink-0 ml-4">
-                <span className="text-slate-500 text-sm block">{edu.period}</span>
-                <span className="text-slate-600 text-xs">{edu.location}</span>
-              </div>
-            </div>
-            <p className="text-[color-mix(in_srgb,var(--accent)_80%,#cbd5e1)] text-sm mt-1">{edu.details}</p>
-            <p className="text-slate-500 text-xs mt-1">
-              <span className="text-slate-400">Coursework:</span> {edu.coursework}
-            </p>
-          </div>
-        ))}
-      </section>
-
-      {/* Experience */}
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">Experience</h2>
-        {experience.map((exp, i) => (
-          <div key={i} className="mb-8">
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="font-medium text-white">{exp.role}</h3>
-                <p className="text-slate-400 text-sm">{exp.company}</p>
-              </div>
-              <div className="text-right shrink-0 ml-4">
-                <span className="text-slate-500 text-sm block">{exp.period}</span>
-                <span className="text-slate-600 text-xs">{exp.location}</span>
-              </div>
-            </div>
-            <ul className="mt-2 space-y-1.5">
-              {exp.bullets.map((b, j) => (
-                <li key={j} className="text-slate-400 text-sm pl-4 relative">
-                  <span className="absolute left-0 text-[var(--accent)]">•</span>
-                  {b}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </section>
-
-      {/* Activities */}
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">Activities</h2>
-        {activities.map((act, i) => (
-          <div key={i} className="mb-4">
-            <div className="flex justify-between items-start">
-              <h3 className="font-medium text-white text-sm">{act.name}</h3>
-              <span className="text-slate-500 text-sm shrink-0 ml-4">
-                {act.period}
-              </span>
-            </div>
-            <p className="text-slate-400 text-sm mt-1">{act.description}</p>
-          </div>
-        ))}
-      </section>
-
-      {/* Skills */}
-      <section>
-        <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">
-          Technical Skills
-        </h2>
-        <div className="space-y-3">
-          {Object.entries(skills).map(([category, items]) => (
-            <div key={category}>
-              <span className="text-sm font-medium text-slate-300">
-                {category}:{" "}
-              </span>
-              <span className="text-sm text-slate-400">
-                {items.join(", ")}
-              </span>
+              <p className="text-[color-mix(in_srgb,var(--accent)_80%,#cbd5e1)] text-sm mt-1">
+                {edu.details}
+              </p>
+              <p className="text-slate-500 text-xs mt-1">
+                <span className="text-slate-400">Coursework:</span>{" "}
+                {edu.coursework}
+              </p>
             </div>
           ))}
-        </div>
-      </section>
+        </section>
+
+        {/* Experience */}
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">
+            Experience
+          </h2>
+          {experience.map((exp, i) => (
+            <div key={i} className="mb-8">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-medium text-white">{exp.role}</h3>
+                  <p className="text-slate-400 text-sm">{exp.company}</p>
+                </div>
+                <div className="text-right shrink-0 ml-4">
+                  <span className="text-slate-500 text-sm block">
+                    {exp.period}
+                  </span>
+                  <span className="text-slate-600 text-xs">{exp.location}</span>
+                </div>
+              </div>
+              <ul className="mt-2 space-y-1.5">
+                {exp.bullets.map((b, j) => (
+                  <li key={j} className="text-slate-400 text-sm pl-4 relative">
+                    <span className="absolute left-0 text-[var(--accent)]">
+                      •
+                    </span>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </section>
+
+        {/* Activities */}
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">
+            Activities
+          </h2>
+          {activities.map((act, i) => (
+            <div key={i} className="mb-4">
+              <div className="flex justify-between items-start">
+                <h3 className="font-medium text-white text-sm">{act.name}</h3>
+                <span className="text-slate-500 text-sm shrink-0 ml-4">
+                  {act.period}
+                </span>
+              </div>
+              <p className="text-slate-400 text-sm mt-1">{act.description}</p>
+            </div>
+          ))}
+        </section>
+
+        {/* Skills */}
+        <section>
+          <h2 className="text-xl font-semibold mb-4 text-[var(--accent)]">
+            Technical Skills
+          </h2>
+          <div className="space-y-3">
+            {Object.entries(skills).map(([category, items]) => (
+              <div key={category}>
+                <span className="text-sm font-medium text-slate-300">
+                  {category}:{" "}
+                </span>
+                <span className="text-sm text-slate-400">
+                  {items.join(", ")}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
